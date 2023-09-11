@@ -1,19 +1,16 @@
+import { Pagination } from 'antd';
 import { observer } from 'mobx-react-lite';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Data, data as newData } from '../../model/data';
 import { Colum, config as newConfig } from '../../model/report-config';
+import tableStore from '../../stores/table-store';
+import { ButtonsRow } from '../ButtonsRow/ButtonsRow';
 import { Cell } from '../Cell/Cell';
 import { Column } from '../Column/Column';
-import cls from './Table.module.scss';
-import tableStore from '../../stores/table-store';
-import { useEffect, useState, useCallback, useMemo } from 'react';
 import { DetailModal } from '../DetailModal/DetailModal';
-import { Pagination } from 'antd';
+import cls from './Table.module.scss';
 
-interface TableProps {
-  className?: string;
-}
-
-const pageSize = 20;
+const PAGE_SIZE = 20;
 
 export const Table = observer(() => {
   const {
@@ -22,80 +19,69 @@ export const Table = observer(() => {
     hideColumns,
     setData,
     setConfig,
-    changeColumnHide,
     setDetailItem
   } = tableStore;
-  
-  
-  
+
   const [isDetailModal, setIsDetailModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-
-  const startIndex = useMemo(() => { 
-    return (currentPage-1)*pageSize
-  }, [currentPage, pageSize])
-
-  const endIndex = useMemo(() => {
-    return (currentPage-1)*pageSize+pageSize
-  }, [currentPage, pageSize])
-
-  const onCloseModal = useCallback(() => {
-    setIsDetailModal(false);
-  }, []);
-
-  const openModal = useCallback((id: number) => {
-    setDetailItem(id);
-    setIsDetailModal(true);
-  }, []);
 
   useEffect(() => {
     setConfig(newConfig);
     setData(newData);
   }, [])
 
+  const startIndex = useMemo(() => { 
+    return (currentPage-1)*PAGE_SIZE
+  }, [currentPage, PAGE_SIZE])
+
+  const endIndex = useMemo(() => {
+    return (currentPage-1)*PAGE_SIZE+PAGE_SIZE
+  }, [currentPage, PAGE_SIZE])
+
+  const onCloseModal = useCallback(() => {
+    setIsDetailModal(false);
+  }, []);
+
+  const openModal = useCallback((id: string) => {
+    setDetailItem(id);
+    setIsDetailModal(true);
+  }, []);
+
   return (
     <>
-    <div className={cls.Table}>
-      <div className={cls.btns}>
+      <div className={cls.Table}>
+        <ButtonsRow />
+        <div className={cls.body}>
         {config.colums.map((column: Colum, columnId: number) => (
-          <button
+          <Column
             key={columnId}
-            className={cls.hideBtn}
-            onClick={() => {changeColumnHide(columnId)}}
-          >{hideColumns[columnId] ? '+' : '-'}</button>
+            id={columnId}
+            hide={hideColumns[columnId]}
+          >
+            {data.slice(startIndex, endIndex).map((item: Data, id: number) => (
+              <Cell
+                onDoubleClick={openModal}
+                key={item.id}
+                itemId={item.id}
+                text={item[column.dataField] ? item[column.dataField] : ''}
+              />
+            ))}
+          </Column>
         ))}
+        </div>
+        <div className={cls.pagination}>
+          <Pagination 
+            onChange={(page) => {setCurrentPage(page)}}
+            defaultCurrent={1}
+            pageSize={PAGE_SIZE}
+            total={data.length ? data.length : 1}
+          />
+        </div>
       </div>
-      <div className={cls.body}>
-      {config.colums.map((column: Colum, columnId: number) => (
-        <Column
-          key={columnId}
-          id={columnId}
-          hide={hideColumns[columnId]}
-        >
-          {data.slice(startIndex, endIndex).map((item: Data, id: number) => (
-            <Cell
-              onDoubleClick={openModal}
-              key={id}
-              itemId={id}
-              text={item[column.dataField] ? item[column.dataField] : ''}
-            />
-          ))}
-        </Column>
-      ))}
-      </div>
-      <div className={cls.pagination}>
-        <Pagination 
-          onChange={(page) => {setCurrentPage(page)}}
-          defaultCurrent={1}
-          pageSize={pageSize}
-          total={data.length ? data.length : 1}
-        />
-      </div>
-    </div>
-    {isDetailModal && <DetailModal
-      isOpen={isDetailModal}
-      onClose={onCloseModal}
-    />}
+      {isDetailModal && <DetailModal
+        isOpen={isDetailModal}
+        onClose={onCloseModal}
+      />}
     </>
   );
 })

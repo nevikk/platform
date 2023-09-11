@@ -1,8 +1,8 @@
+import { observer } from 'mobx-react-lite';
 import { FC } from 'react';
+import tableStore from '../../stores/table-store';
 import { Modal } from '../Modal/Modal';
 import cls from './DetailModal.module.scss';
-import { observer } from 'mobx-react-lite';
-import tableStore from '../../stores/table-store';
 
 interface DetailModalProps {
   isOpen: boolean;
@@ -17,9 +17,6 @@ export const DetailModal: FC<DetailModalProps> = observer((props) => {
 
   const { config, detailItem, hideColumns } = tableStore;
 
-  console.log('hideColumns', {...hideColumns});
-  
-
   return (
     <Modal
       isOpen={isOpen}
@@ -27,12 +24,9 @@ export const DetailModal: FC<DetailModalProps> = observer((props) => {
       lazy
     >
       <div className={cls.DetailModal}>
-        {config.colums.map((column, id) => {
-          console.log(hideColumns[id]);
-          
-          return (
+        {config.colums.map((column, id) => (
           hideColumns[id] || <div key={id}>{column.caption}: {detailItem[column.dataField]}</div>
-        )})}
+        ))}
       </div>
     </Modal>
   );

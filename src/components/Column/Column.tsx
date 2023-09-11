@@ -1,9 +1,7 @@
-import { FC, ReactNode, useState } from "react";
-import cls from './Column.module.scss';
-import { Colum } from "../../model/report-config";
-import { Cell } from "../Cell/Cell";
+import { FC, ReactNode } from "react";
 import { Mods, classNames } from "../../helper/classNames/classNames";
 import { HeadCell } from "../HeadCell/HeadCell";
+import cls from './Column.module.scss';
 
 interface ColumnProps {
   children?: ReactNode;

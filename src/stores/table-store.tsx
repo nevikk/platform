@@ -36,8 +36,9 @@ class TableStore {
     this.config.colums[columnId].caption = value;
   }
 
-  setDetailItem = (value: number) => {
-    this.detailItem = this.data[value];
+  setDetailItem = (value: string) => {
+    const findItem = this.data.find(item => item.id === value);
+    this.detailItem = findItem ? findItem : {};
   }
 }
 

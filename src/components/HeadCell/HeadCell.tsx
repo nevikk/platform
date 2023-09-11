@@ -1,8 +1,8 @@
-import { FC, memo, ChangeEvent } from 'react';
 import { observer } from 'mobx-react-lite';
-import cls from './HeadCell.module.scss';
-import tableStore from '../../stores/table-store';
+import { ChangeEvent, FC, memo } from 'react';
 import { Mods, classNames } from '../../helper/classNames/classNames';
+import tableStore from '../../stores/table-store';
+import cls from './HeadCell.module.scss';
 
 interface HeadCellProps {
   columnId: number;

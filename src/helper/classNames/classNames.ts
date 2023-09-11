@@ -1,4 +1,3 @@
-// Record - специальный typescript класс, который в нашем случае <string, boolean | string> означает, что в качестве ключа будет string, а в качестве значения будет булеан или стринг
 export type Mods = Record<string, boolean | string | undefined>
 
 // Функция, которая будет склеивать классы, которые мы сюда отправим
@@ -12,7 +11,6 @@ export function classNames(
 ): string {
   return [
     cls,
-    // В массиве additional могут быть undefined, то нужно фильтровать по boolean
     ...additional.filter(Boolean),
     ...Object.entries(mods)
       .filter(([_, value]) => Boolean(value))

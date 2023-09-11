@@ -3,8 +3,8 @@ import cls from './Cell.module.scss';
 
 interface CellProps {
   text: string;
-  onDoubleClick: (id: number) => void;
-  itemId: number;
+  onDoubleClick: (id: string) => void;
+  itemId: string;
 }
 
 export const Cell: FC<CellProps> = memo((props) => {

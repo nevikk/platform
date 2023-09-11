@@ -1,7 +1,7 @@
 import { MutableRefObject, ReactNode, useCallback, useEffect, useRef, useState } from 'react';
-import cls from './Modal.module.scss';
 import { Mods, classNames } from '../../helper/classNames/classNames';
 import { Portal } from '../Portal/Portal';
+import cls from './Modal.module.scss';
 
 interface ModalProps {
   className?: string;
@@ -67,9 +67,6 @@ export const Modal = (props: ModalProps) => {
     [cls.opened]: isMounted,
     [cls.isClosing]: isClosing,
   }
-
-  console.log('mods', mods);
-  
 
   const onContentClick = (e: React.MouseEvent) => {
     e.stopPropagation();
