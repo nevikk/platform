@@ -4,4 +4,9 @@
   padding: 25px 15px;
   display: flex;
   justify-content: center;
+
+  @media (max-width: 900px) {
+    max-width: 100%;
+    overflow-x: auto;
+  }
 }

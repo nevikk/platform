@@ -1,6 +1,6 @@
 .HeadCell {
   border: 1px solid var(--border-color);
-  transition: border 0.3 ease;
+  transition: border 0.3s ease;
 
   &.empty {
     border: 1px solid red;
@@ -10,6 +10,4 @@
 .input {
   padding: 8px;
   font: inherit;
-
-
 }

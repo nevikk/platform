@@ -1,9 +1,16 @@
+.Table {
+  overflow-x: auto;
+  display: grid;
+  grid-template: 24px auto auto / auto;
+  grid-auto-columns: auto;
+  grid-auto-flow: column;
+}
+
 .body {
   display: grid;
   grid-template: auto / auto;
   grid-auto-columns: auto;
   grid-auto-flow: column;
-  border: 1px solid var(--border-color);
 }
 
 .pagination {
