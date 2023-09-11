@@ -1,0 +1,27 @@
+.btns {
+  display: grid;
+  grid-template: auto / auto;
+  grid-auto-columns: auto;
+  grid-auto-flow: column;
+}
+
+.hideBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
+}
+
+.body {
+  display: grid;
+  grid-template: auto / auto;
+  grid-auto-columns: auto;
+  grid-auto-flow: column;
+  border: 1px solid var(--border-color);
+}
+
+.pagination {
+  margin-top: 24px;
+}

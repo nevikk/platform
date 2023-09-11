@@ -1,0 +1,31 @@
+.Column {
+  position: relative;
+}
+
+
+
+.hideBtn {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
+  top: -30px;
+  left: -10px;
+  // left: 50%;
+  // transform: translate(-50%);
+
+  &.hide {
+    // margin: 0 10px;
+  }
+}
+
+.content {
+
+  &.hide {
+    max-width: 0px;
+    overflow: hidden;
+  }
+}
